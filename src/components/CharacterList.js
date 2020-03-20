@@ -11,7 +11,7 @@ export default function CharacterList() {
     //  Important: verify the 2nd `useEffect` parameter: the dependancies array!
     axios.get("https://cors-anywhere.herokuapp.com/https://rickandmortyapi.com/api/character/")
     .then(res => {
-      setCharaList(res.data);
+      setCharaList(res.data.results);
     })
     .catch(err => console.log('Big Error!', err))
   }, []);
@@ -21,7 +21,7 @@ export default function CharacterList() {
       <p>{charaList.map(chara => {
         console.log(chara);
         return(
-          <CharacterCard id = {chara.id} character = {chara}/>
+          <CharacterCard name = {chara.name} status = {chara.status}/>
         )
       })}</p>
     </section>

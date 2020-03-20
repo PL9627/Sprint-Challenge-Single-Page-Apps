@@ -1,12 +1,10 @@
 import React from "react";
 
 export default function CharacterCard(props) {
-  const {name, status, image} = props.chara;
   return (
     <div>
-      <img src = {image} />
-      <p>Name: {name}</p>
-      <p>Status: {status}</p>
+      <p>Name: {props.name}</p>
+      <p>Status: {props.status}</p>
     </div>
   );
 }
