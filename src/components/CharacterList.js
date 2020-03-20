@@ -18,7 +18,6 @@ export default function CharacterList() {
 
   return (
     <section className="character-list">
-      <h2>TODO: `array.map()` over your state here!</h2>
       <p>{charaList.map(chara => {
         console.log(chara);
         return(
