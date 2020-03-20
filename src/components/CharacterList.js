@@ -21,6 +21,9 @@ export default function CharacterList() {
       <h2>TODO: `array.map()` over your state here!</h2>
       <p>{charaList.map(chara => {
         console.log(chara);
+        return(
+          <CharacterCard id = {chara.id} character = {chara}/>
+        )
       })}</p>
     </section>
   );
