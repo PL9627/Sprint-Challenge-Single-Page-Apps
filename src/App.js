@@ -8,6 +8,7 @@ export default function App() {
   return (
     <main data-testid='app'>
       <Header />
+      <Route exact path = '/' component ={WelcomePage}/>
       <CharacterList />
     </main>
   );
