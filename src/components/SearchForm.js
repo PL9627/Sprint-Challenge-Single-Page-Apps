@@ -1,51 +1,10 @@
-import React, { useState, useEffect } from "react";
-import { withFormik, Form, Field } from "formik";
-import * as Yup from "yup";
-import axios from 'axios';
+import React, { useState } from "react";
 
-const SearchForm = (props) => {
-  const {touched, errors, status} = props;
-
-  const [users, setUsers] = useState([]);
-
-  useEffect(() => {
-    status && setUsers(status);
-  }, [status]);
+export default function SearchForm() {
  
   return (
     <section className="search-form">
-      <div>
-        <Form>
-          <Field type = 'text' name = 'search' placeholder = 'Search' />
-              {touched.search && errors.search ? (
-                <span className = 'error'>{errors.search}</span>
-              ) : null};
-          <button type ='submit'>Search</button>
-        </Form>
-        {users.search && (
-          <p>{users.name}</p>
-        )}
-      </div>
+     // Add a search form here
     </section>
   );
 }
-
-export default withFormik({
-  mapPropsToValues: props => {
-    return {
-      search: props.search || ""
-    };
-  },
-  validationSchema: Yup.object().shape({
-    search: Yup.string().required()
-  }),
-  handleSubmit: (values, {resetForm, setStatus}) => {
-    axios.post("https://cors-anywhere.herokuapp.com/https://rickandmortyapi.com/api/character/", values)
-    .then(response => {
-      console.log(response)
-      setStatus(response.data);
-      resetForm();
-    })
-    .catch(err => console.log('Search Error!', err.response))
-  }
-})(SearchForm);
