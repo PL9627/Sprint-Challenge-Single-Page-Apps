@@ -6,6 +6,7 @@ import WelcomePage from './components/WelcomePage';
 import SearchForm from './components/SearchForm';
 
 export default function App() {
+  
   return (
     <main data-testid='app'>
       <Header />

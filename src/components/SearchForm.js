@@ -1,33 +1,24 @@
 import React, { useState } from "react";
 
-export default function SearchForm(props) {
-  const charas = props.charaList;
-
-  const [searchName, setSearchName] = useState({
-    name: ''
+export default function SearchForm({ onSearch }) {
+  const [query, setQuery] = useState({
+    name: ""
   })
-
-  const handleChange = (event) => {
-    setSearchName({...searchName, name: event.target.value})
-  }
-
-  const submitHandler = (event) => {
-    event.preventDefault();
-
-    props.setCharaList(charas.filter(characters => characters.name === searchName))
+  const handleInputChange = (event) => {
+    setQuery({ ...query, name: event.target.value })
   }
 
   return (
     <section className="search-form">
-     <form onSubmit = {submitHandler}>
-      <input 
-        type = 'text'
-        name = 'name'
-        placeholder = 'Search Characters'
-        onChange = {handleChange}
-        value = {searchName.name} />
-      <button type = 'submit'>Search</button>
-     </form>
+      <form onSubmit={() => onSearch(query)}>
+        <input
+          onChange={handleInputChange}
+          placeholder="name"
+          value={query.name}
+          name="name"
+        />
+        <button type="submit">Search</button>
+      </form>
     </section>
   );
 }

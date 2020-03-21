@@ -21,7 +21,7 @@ export default function CharacterList() {
       <p>{charaList.map(chara => {
         console.log(chara);
         return(
-          <CharacterCard name = {chara.name} status = {chara.status}/>
+          <CharacterCard key = {chara.id} name = {chara.name} status = {chara.status}/>
         )
       })}</p>
     </section>
