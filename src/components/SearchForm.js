@@ -22,6 +22,9 @@ const SearchForm = (props) => {
               ) : null};
           <button type ='submit'>Search</button>
         </Form>
+        {users.search && (
+          <p>{users.name}</p>
+        )}
       </div>
     </section>
   );
@@ -37,7 +40,7 @@ export default withFormik({
     search: Yup.string().required()
   }),
   handleSubmit: (values, {resetForm, setStatus}) => {
-    axios.post("https://cors-anywhere.herokuapp.com/https://rickandmortyapi.com/api/character/")
+    axios.post("https://cors-anywhere.herokuapp.com/https://rickandmortyapi.com/api/character/", values)
     .then(response => {
       console.log(response)
       setStatus(response.data);
