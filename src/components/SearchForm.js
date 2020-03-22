@@ -1,40 +1,40 @@
 import React, { useState, useEffect } from "react";
-import axios from 'axios';
+import axios from "axios";
 
 export default function SearchForm() {
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchTerm, setSearchTerm] = useState("");
 
   const [searchResults, setSearchResults] = useState([]);
 
-  const [data, setData] = useState([]);
+  const data = ["https://cors-anywhere.herokuapp.com/https://rickandmortyapi.com/api/character/"]
 
   const handleChange = event => {
     setSearchTerm(event.target.value);
   };
 
   useEffect(() => {
-    axios.get("https://cors-anywhere.herokuapp.com/https://rickandmortyapi.com/api/character/")
-    .then(res => {
-      setData(res.data.results)
-    })
-    .catch(err => console.log('ERROR', err));
-
-    const searchItems = data.filter(char => {
-      console.log(char)
-    });
+    const searchItems = data.filter(char => 
+      char.toLowerCase().includes(searchTerm)
+      );
 
     setSearchResults(searchItems);
   }, [searchTerm]);
 
   return (
     <section className="search-form">
-      <input
-        type = 'text'
-        value = {searchTerm}
-        onChange ={handleChange}
-        placeholder = 'Search'
-         />
-      <button type = "submit">Search</button>
+        <div>
+        <input
+          type="text"
+          value={searchTerm}
+          onChange={handleChange}
+          placeholder="Search"
+        />
+        <ul>
+          {searchResults.map(item => (
+            <li>{item}</li>
+          ))}
+        </ul>
+      </div>
     </section>
   );
 }
