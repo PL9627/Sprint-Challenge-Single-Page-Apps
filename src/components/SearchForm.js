@@ -1,40 +1,81 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import styled from "styled-components";
+
+const Card = styled.div`
+  width: 30%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 1px solid black;
+  margin: 2% 0 2% 35%;
+`;
+
+const Search = styled.input`
+  display: flex;
+  margin: 5% 0 5% 42%;
+`;
+
+const Char = props => {
+  const { name, status } = props;
+  return (
+    <div>
+      <Card>
+        <p>Name: {name}</p>
+        <p>Status: {status}</p>
+      </Card>
+    </div>
+  );
+};
 
 export default function SearchForm() {
-  const [searchTerm, setSearchTerm] = useState("");
+  const [searchTerms, setSearchTerms] = useState([]);
 
-  const [searchResults, setSearchResults] = useState([]);
+  const [searchResults, setSearchResults] = useState("");
 
-  const data = ["https://cors-anywhere.herokuapp.com/https://rickandmortyapi.com/api/character/"]
-
-  const handleChange = event => {
-    setSearchTerm(event.target.value);
-  };
+  const [filterChar, setFilterChar] = useState([]);
 
   useEffect(() => {
-    const searchItems = data.filter(char => 
-      char.toLowerCase().includes(searchTerm)
-      );
+    axios
+      .get(
+        "https://cors-anywhere.herokuapp.com/https://rickandmortyapi.com/api/character/"
+      )
+      .then(res => {
+        //console.log(res.data.results);
+        setSearchTerms(res.data.results);
+      })
+      .catch(err => console.log("Search Err", err));
+  }, []);
 
-    setSearchResults(searchItems);
-  }, [searchTerm]);
+  useEffect(() => {
+    setFilterChar(
+      searchTerms.filter(chars =>
+        chars.name.toLowerCase().includes(searchResults.toLowerCase())
+      )
+    );
+  }, [searchResults, searchTerms]);
+
+  const handleChange = event => {
+    setSearchResults(event.target.value);
+  };
+
+  const submitHandler = event => {
+    event.preventDefault();
+  };
 
   return (
     <section className="search-form">
-        <div>
-        <input
+      <form onSubmit={submitHandler}>
+        <Search
+          name="search"
           type="text"
-          value={searchTerm}
           onChange={handleChange}
           placeholder="Search"
         />
-        <ul>
-          {searchResults.map(item => (
-            <li>{item}</li>
-          ))}
-        </ul>
-      </div>
+      </form>
+      {filterChar.map((searchTerms, idx) => (
+        <Char key={idx} {...searchTerms} />
+      ))}
     </section>
   );
 }
