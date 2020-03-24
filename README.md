@@ -29,6 +29,8 @@ Demonstrate your understanding of this Sprint's concepts by answering the follow
 
 > Answer:
 
+    The benefits are not having to wait for content with a server response and allows content and site URL control.
+
 ## Project Set Up
 
 Follow these steps to set up and work on your project:
